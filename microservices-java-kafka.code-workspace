@@ -1,0 +1,25 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "account"
+		},
+		{
+			"path": "account/account-common"
+		},
+		{
+			"path": "account/account-cmd"
+		},
+		{
+			"path": "account/account-query"
+		},
+		{
+			"path": "cqrs-core"
+		}
+	],
+	"settings": {
+		"java.configuration.updateBuildConfiguration": "interactive"
+	}
+}
