@@ -1,6 +1,6 @@
-# CQRS & Event Sourcing. Powered by Spring Boot and Apache Kafka.
+# CQRS & Event Sourcing w/ Spring Boot and Apache Kafka.
 
-This is the case study project built during the course [Learn how to create microservices that are based on CQRS & Event Sourcing. Powered by Spring Boot and Apache Kafka.](http://) 
+This is the case study project built during the course [Learn how to create microservices that are based on CQRS & Event Sourcing. Powered by Spring Boot and Apache Kafka.](https://www.udemy.com/course/java-microservices-cqrs-event-sourcing-with-kafka/) 
 
 # Tools
 
