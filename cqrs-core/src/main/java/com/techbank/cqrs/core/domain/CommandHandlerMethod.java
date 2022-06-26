@@ -1,4 +1,6 @@
-package com.techbank.cqrs.core.commands;
+package com.techbank.cqrs.core.domain;
+
+import com.techbank.cqrs.core.commands.BaseCommand;
 
 @FunctionalInterface
 public interface CommandHandlerMethod {
