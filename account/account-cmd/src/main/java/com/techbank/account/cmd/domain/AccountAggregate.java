@@ -68,7 +68,11 @@ public class AccountAggregate extends AggregateRoot {
         }
 
         if (amount.compareTo(BigDecimal.ZERO) <= 0) {
-            throw new IllegalArgumentException("Cannot withdraw a negative amount.");
+            throw new IllegalArgumentException("Cannot withdraw a negative amount!");
+        }
+
+        if (amount.compareTo(this.balance) > 0) {
+            throw new IllegalArgumentException("Current balance does not allow withdrawal of this amount!");
         }
         
         raiseEvent(

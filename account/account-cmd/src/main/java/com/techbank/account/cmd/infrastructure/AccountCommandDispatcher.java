@@ -1,5 +1,6 @@
 package com.techbank.account.cmd.infrastructure;
 
+import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
@@ -13,11 +14,10 @@ import com.techbank.cqrs.core.infrastructure.CommandDispatcher;
 @Service
 public class AccountCommandDispatcher implements CommandDispatcher {
 
-//    private final Map<Class<? extends BaseCommand>, List<CommandHandlerMethod<? extends BaseCommand>>> routes = Map.of();
-    private final Map<Class<? extends BaseCommand>, CommandHandlerMethod> routes = Map.of();
+    private final Map<Class<? extends BaseCommand>, CommandHandlerMethod> routes = new HashMap<>();
 
     @Override
-    public <T extends BaseCommand> void registerHandler(Class<T> type, CommandHandlerMethod handler) {
+    public <T extends BaseCommand> void registerHandler(Class<T> type, CommandHandlerMethod<T> handler) {
         // final var handlers = routes.computeIfAbsent(type, c -> new LinkedList<>());
         // handlers.add(handler);
         routes.put(type, handler);

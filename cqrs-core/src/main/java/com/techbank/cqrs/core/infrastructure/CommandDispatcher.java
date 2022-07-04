@@ -14,7 +14,7 @@ public interface CommandDispatcher {
      * @param handler the handler for the command type
      * 
      */
-    <T extends BaseCommand> void registerHandler(Class<T> type, CommandHandlerMethod handler);
+    <T extends BaseCommand> void registerHandler(Class<T> type, CommandHandlerMethod<T> handler);
 
     /**
      * Dispatches a command to the appropriate event handler.
