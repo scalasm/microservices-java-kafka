@@ -37,7 +37,7 @@ public class AccountEventStore implements EventStore {
             final var eventModel = EventModel.builder()
                 .timestamp(new Date())
                 .aggregateId(aggregateId)
-                .aggregaeType(AccountAggregate.class.getTypeName())
+                .aggregateType(AccountAggregate.class.getTypeName())
                 .version(version)
                 .eventType(event.getClass().getTypeName())
                 .eventData(event)

@@ -27,7 +27,7 @@ public class EventModel {
     private Date timestamp;
 
     private String aggregateId;
-    private String aggregaeType;
+    private String aggregateType;
     private int version;
 
     private String eventType;
