@@ -6,6 +6,8 @@ This is the case study project built during the course [Learn how to create micr
 
 Use Visual Studio code with remote containers extension - a configuration is included in this repository.
 
+![Visual Studio Code workspace layout](./docs/img/vsc-workspace.png "Visual Studio Code workspace layout")
+
 # References 
 
 TBD
