@@ -1,0 +1,195 @@
+@startuml "Classes"
+
+package "cqs.core" {
+    package messages {
+        class Message {
+            -id: String
+        }
+    }
+
+    package commands {
+        Message <|-- BaseCommand
+        class BaseCommand {}
+    }
+
+    package domain {
+        class AggregateRoot {
+            #id: String 
+            -version: int 
+
+            +getUncommittedEvents() List<BaseEvent>
+            +markChangesAsCommitted() void
+            
+            +raiseEvent(event: BaseEvent) void
+            +replayEvents(events: Iterable<BaseEvent>)
+            
+            #applyChange(event: BaseEvent, isNewEvent: boolean) void
+        }
+
+        interface CommandHandlerMethod<T> {
+            +handle(command: T): void
+        }   
+    }
+
+    package events {
+        Message <|-- BaseEvent
+        class BaseEvent {
+            -int version
+        }
+
+        class EventModel <<Document>>{
+            -id: String
+            -timestamp: Date 
+
+            -aggregateId: String 
+            -aggregateType: String
+            -version: int 
+
+            -eventType: String 
+            -eventData: BaseEvent 
+        }
+    }
+
+    package handlers {
+        interface EventSourcingHandler<T> {
+            +save(aggregate: AggregateRoot): void
+            +getById(aggregateId: String ): T
+        }
+    }
+
+    package infrastructure {
+        interface CommandDispatcher {
+            +<T> registerHandler(type: Class<T>, handler: CommandHandlerMethod<T>) : void
+            +send(command: BaseCommand): void
+        }
+
+        interface EventStore {
+            +void saveEvents(aggregateId: String, events: Iterable<BaseEvent> events, int expectedVersion): void
+            +getEvents(aggregateId: String) : List<BaseEvent>
+        }
+    }
+
+    package exceptions {
+        class AggregateNotFoundException {
+        }
+
+        class ConcurrencyException {
+        }
+    }
+} 
+
+
+package account.cmd {
+    package cmd.domain {
+        AggregateRoot <|-- AccountAggregate
+        class AccountAggregate {
+            +AccountAggregate(command: CreateAccountCommand)
+            +apply(event: AccountOpenedEvent) void
+
+            +depositFunds(amount: BigDecimal) void
+            +apply(event: FundsDepositedEvent) void
+
+            +withdrawFunds(amount: BigDecimal) void
+            +apply(event: FundsWithdrawnEvent) void
+
+            +closeAccount(amount: BigDecimal) void
+            +apply(event: AccountClosedEvent) void
+        }
+
+        class EventStoreRepository <<Mongo Repository>>{
+            +findByAggregateId(aggregateId: String): List<EventModel>
+        }
+    }
+
+    package cmd.infrastructure {
+        CommandDispatcher <|-- AccountCommandDispatcher
+        class AccountCommandDispatcher {
+            +<T> registerHandler(type: Class<T>, handler: CommandHandlerMethod<T>) : void
+            +send(command: BaseCommand): void
+        }
+
+        EventSourcingHandler <|-- AccountEventSourcingHandler
+        class AccountEventSourcingHandler {
+            +save(aggregate: AggregateRoot): void
+            +getById(aggregateId: String ): AccountAggregate
+        }
+
+        AccountEventSourcingHandler --> EventStore: eventStore
+
+        EventStore <|-- AccountEventStore
+        class AccountEventStore {
+            +void saveEvents(aggregateId: String, events: Iterable<BaseEvent> events, int expectedVersion): void
+            +getEvents(aggregateId: String) : List<BaseEvent>
+        }
+        AccountEventStore --> EventStoreRepository: eventStoreRepository
+    }
+
+    package cmd.api.commands {
+        interface CommandHandler {
+            +handle(command: CreateAccountCommand);
+            +handle(command: DepositFundsCommand);
+            +handle(command: WithdrawFundsCommand);
+            +handle(command: CloseAccountCommand);
+        }
+
+        CommandHandler <|-- AccountCommandHandler
+        class AccountCommandHandler {
+            +handle(command: CreateAccountCommand);
+            +handle(command: DepositFundsCommand);
+            +handle(command: WithdrawFundsCommand);
+            +handle(command: CloseAccountCommand);
+        }
+
+        class CreateAccountCommand {
+            -accountHolder: String
+            -openingBalance: BigDecimal
+        }
+        BaseCommand <|-- CreateAccountCommand
+
+        class CloseAccountCommand {
+        }
+        BaseCommand <|-- CloseAccountCommand
+
+        class DepositFundsCommand {
+            -amount: BigDecimal
+        }
+        BaseCommand <|-- DepositFundsCommand
+
+        class WithdrawFundsCommand {
+            -amount: BigDecimal
+        }
+        BaseCommand <|-- WithdrawFundsCommand
+    }
+}
+
+package account.common {
+    package common.dto {
+        enum AccountType {
+            SAVINGS
+            ACCOUNT
+        }
+        CreateAccountCommand --> AccountType: accountType
+    }
+
+    package common.events {
+        class AccountOpenedEvent {
+            -accountHolder: String
+            -createdDate: Date
+            -openingBalance: BigDecimal
+        }
+        BaseEvent <|-- AccountOpenedEvent
+        AccountOpenedEvent --> AccountType: accountType
+
+        class FundsDepositedEvent {
+            -amount: BigDecimal
+        }
+        BaseEvent <|-- FundsDepositedEvent
+
+        class FundsWithdrawnEvent {
+            -amount: BigDecimal
+        }
+        BaseEvent <|-- FundsWithdrawnEvent
+    }
+}
+
+@enduml
