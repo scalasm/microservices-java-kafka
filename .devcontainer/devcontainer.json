@@ -36,8 +36,10 @@
 				"vscjava.vscode-java-pack",
 				"GabrielBB.vscode-lombok",
 				"amazonwebservices.aws-toolkit-vscode",
+				"boto3typed.boto3-ide",
 				"redhat.vscode-yaml",
-				"redhat.fabric8-analytics"
+				"redhat.fabric8-analytics",
+				"jebbs.plantuml"
 			]
 		}
 	},
