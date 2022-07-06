@@ -8,7 +8,7 @@ import java.util.Map;
 import org.springframework.stereotype.Service;
 
 import com.techbank.cqrs.core.commands.BaseCommand;
-import com.techbank.cqrs.core.domain.CommandHandlerMethod;
+import com.techbank.cqrs.core.commands.CommandHandlerMethod;
 import com.techbank.cqrs.core.infrastructure.CommandDispatcher;
 
 @Service

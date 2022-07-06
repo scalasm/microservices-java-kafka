@@ -1,7 +1,7 @@
 package com.techbank.cqrs.core.infrastructure;
 
 import com.techbank.cqrs.core.commands.BaseCommand;
-import com.techbank.cqrs.core.domain.CommandHandlerMethod;
+import com.techbank.cqrs.core.commands.CommandHandlerMethod;
 
 /**
  * Dispatches the events to the appropriate handler method.
