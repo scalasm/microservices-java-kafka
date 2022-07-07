@@ -3,7 +3,7 @@ package com.techbank.account.cmd.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import com.techbank.account.cmd.api.commands.CreateAccountCommand;
+import com.techbank.account.cmd.api.commands.OpenAccountCommand;
 import com.techbank.account.common.events.AccountClosedEvent;
 import com.techbank.account.common.events.AccountOpenedEvent;
 import com.techbank.account.common.events.FundsDepositedEvent;
@@ -24,7 +24,7 @@ public class AccountAggregate extends AggregateRoot {
      */
     private BigDecimal balance;
 
-    public AccountAggregate(final CreateAccountCommand command) {
+    public AccountAggregate(final OpenAccountCommand command) {
         raiseEvent(
             AccountOpenedEvent.builder()
                 .id(command.getId())  

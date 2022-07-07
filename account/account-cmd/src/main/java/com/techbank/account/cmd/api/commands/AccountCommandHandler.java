@@ -13,7 +13,7 @@ public class AccountCommandHandler implements CommandHandler {
     private final EventSourcingHandler<AccountAggregate> eventSourcingHandler;
 
     @Override
-    public void handle(final CreateAccountCommand command) {
+    public void handle(final OpenAccountCommand command) {
         final var aggregate = new AccountAggregate(command);
 
         eventSourcingHandler.save(aggregate);

@@ -8,7 +8,7 @@ import com.techbank.cqrs.core.commands.BaseCommand;
 import lombok.Data;
 
 @Data
-public class CreateAccountCommand extends BaseCommand {
+public class OpenAccountCommand extends BaseCommand {
     private String accoutHolder;
     private AccountType accountType;
     private BigDecimal openingBalance;
