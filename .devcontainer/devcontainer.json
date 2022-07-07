@@ -46,7 +46,8 @@
 				"boto3typed.boto3-ide",
 				"redhat.vscode-yaml",
 				"redhat.fabric8-analytics",
-				"jebbs.plantuml"
+				"jebbs.plantuml",
+				"humao.rest-client"
 			]
 		}
 	},
