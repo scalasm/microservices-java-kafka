@@ -8,5 +8,5 @@ import lombok.Data;
 
 @Data
 public class DepositFundsCommand extends BaseCommand {
-    private final BigDecimal amount;    
+    private BigDecimal amount;    
 }
