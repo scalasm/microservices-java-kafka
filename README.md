@@ -8,7 +8,9 @@ Use Visual Studio code with remote containers extension - a configuration is inc
 
 ![Visual Studio Code workspace layout](./docs/img/vsc-workspace.png "Visual Studio Code workspace layout")
 
-# References 
+# Debug and test
 
-TBD
+* Ensure that MongoDB, MySQL, Kafka, and Zookeeper containers are running and reachable from your machine.
+* Run both `AccountCommandApplication`  and `AccountQueryApplication`
+* Use the sample REST invocations, like in [this folder](./rest-client/) (using [VSC REST Client extension](https://marketplace.visualstudio.com/items?itemName=humao.rest-client)).
 
