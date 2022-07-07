@@ -56,5 +56,9 @@ RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
 # Required for access to AWS CodeCommit repositories using codecommit://<profile>@<repo-name> syntax
 RUN su vscode -c "sudo pip install git-remote-codecommit"
 
+# Graphviz is required for PlantUML extension
+RUN apt-get update && export DEBIAN_FRONTEND=noninteractive \
+     && apt-get -y install --no-install-recommends graphviz
+
 # [Optional] Uncomment this line to install global node packages.
 # RUN su vscode -c "source /usr/local/share/nvm/nvm.sh && npm install -g <your-package-here>" 2>&1

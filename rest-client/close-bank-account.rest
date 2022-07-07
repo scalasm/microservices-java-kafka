@@ -1,0 +1,1 @@
+DELETE http://localhost:5000/api/v1/close-bank-account/ddb9fc7f-b21a-44df-a6a4-f36fe707e047 HTTP/1.1

@@ -21,6 +21,13 @@
 			"LOCAL_DOCKER_COMPOSE_VERSION": "2.6.0"
 		}
 	},
+	// MongoDB, MySQL, and Kafka containers are running in separate Docker network (e.g., techbankNet) - 
+	// If I want to be able to connect to them, the solution is to use "host" network and share the same
+	// network settings as your host machine (e.g., your laptop).
+	// See https://stackoverflow.com/questions/24319662/from-inside-of-a-docker-container-how-do-i-connect-to-the-localhost-of-the-mach .
+	"runArgs": [
+		"--network=host"
+	],
 	// Configure tool-specific properties.#S
 	"customizations": {
 		// Configure properties specific to VS Code.
@@ -36,8 +43,11 @@
 				"vscjava.vscode-java-pack",
 				"GabrielBB.vscode-lombok",
 				"amazonwebservices.aws-toolkit-vscode",
+				"boto3typed.boto3-ide",
 				"redhat.vscode-yaml",
-				"redhat.fabric8-analytics"
+				"redhat.fabric8-analytics",
+				"jebbs.plantuml",
+				"humao.rest-client"
 			]
 		}
 	},
@@ -62,6 +72,8 @@
 		// Re-use local AWS configuration
 		"source=${localEnv:HOME}/.aws,target=/home/vscode/.aws,type=bind,consistency=cached",
 		// Re-use local Git configuration
-		"source=${localEnv:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached"
+		"source=${localEnv:HOME}/.gitconfig,target=/home/vscode/.gitconfig,type=bind,consistency=cached",
+		// Maven cache will be shared with my local system
+		"source=${localEnv:HOME}/.m2,target=/home/vscode/.m2,type=bind,consistency=cached"
 	]
 }
