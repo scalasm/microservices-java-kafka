@@ -103,4 +103,8 @@ public class AccountAggregate extends AggregateRoot {
     public void apply(final AccountClosedEvent event) {
         this.isActive = false;
     }
+
+    public boolean isActive() {
+        return isActive;
+    }
 }

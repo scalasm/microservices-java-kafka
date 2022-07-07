@@ -8,6 +8,7 @@ import com.techbank.account.cmd.domain.AccountAggregate;
 import com.techbank.cqrs.core.domain.AggregateRoot;
 import com.techbank.cqrs.core.handlers.EventSourcingHandler;
 import com.techbank.cqrs.core.infrastructure.EventStore;
+import com.techbank.cqrs.core.producers.EventProducer;
 
 import lombok.RequiredArgsConstructor;
 
@@ -15,6 +16,8 @@ import lombok.RequiredArgsConstructor;
 public class AccountEventSourcingHandler implements EventSourcingHandler<AccountAggregate> {
 
     private final EventStore eventStore;
+
+    private final EventProducer eventProducer;
 
     @Override
     public void save(AggregateRoot aggregate) {
@@ -33,5 +36,22 @@ public class AccountEventSourcingHandler implements EventSourcingHandler<Account
             aggregate.setVersion(latestVersion.get());
         }
         return aggregate;
+    }
+
+    @Override
+    public void republishEvents() {
+        var aggregateIds = eventStore.getAggregateIds();
+        for (var aggregateId: aggregateIds) {
+            var aggregate = getById(aggregateId);
+            // Just skip accounts that are inactive anyway - we spare some traffic and useless processing anyway
+            if (aggregate != null && aggregate.isActive()) {
+                var eventStream = eventStore.getEvents(aggregateId);
+                
+                eventStream.forEach(event -> {
+                    final var topic = event.getClass().getSimpleName();
+                    eventProducer.produce(topic, event);
+                } );
+            }
+        }
     }
 }
