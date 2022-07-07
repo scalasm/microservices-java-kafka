@@ -16,4 +16,10 @@ public interface EventSourcingHandler<T> {
      * Returns the latest state of the aggregate.
      */
     T getById(String aggregateId);
+
+    /**
+     * Republish all events for all aggregates according to their timeline.
+     * This is particularly useful when there is need for recreating the read-only views.
+     */
+    void republishEvents();
 }
