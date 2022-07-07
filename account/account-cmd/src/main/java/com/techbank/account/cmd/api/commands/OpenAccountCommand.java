@@ -9,7 +9,7 @@ import lombok.Data;
 
 @Data
 public class OpenAccountCommand extends BaseCommand {
-    private String accoutHolder;
+    private String accountHolder;
     private AccountType accountType;
     private BigDecimal openingBalance;
 }

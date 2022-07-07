@@ -1,5 +1,6 @@
 package com.techbank.cqrs.core.domain;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public abstract class AggregateRoot {
 
     private int version = -1;
 
-    private final List<BaseEvent> changes = List.of();
+    private final List<BaseEvent> changes = new ArrayList<>();
 
     public String getId() {
         return id;

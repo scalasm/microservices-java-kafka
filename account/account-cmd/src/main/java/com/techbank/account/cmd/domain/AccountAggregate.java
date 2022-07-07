@@ -28,9 +28,10 @@ public class AccountAggregate extends AggregateRoot {
         raiseEvent(
             AccountOpenedEvent.builder()
                 .id(command.getId())  
-                .accountHolder(command.getAccoutHolder())
-                .accountType(command.getAccountType())
                 .createdDate(new Date())
+                .accountHolder(command.getAccountHolder())
+                .accountType(command.getAccountType())
+                .openingBalance(command.getOpeningBalance())
                 .build()
         );
     }
