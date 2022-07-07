@@ -18,7 +18,7 @@ spring:
     consumer:
       bootstrap-servers: localhost:9092
       # We use the same consumer so that all consumers we'll work on the same queue
-      group-id: bankaccountConsumer
+      group-id: bankAccountConsumer
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringSerializer
       value-deserializer: org.springframework.kafka.support.serializer.JsonSerializer
