@@ -3,8 +3,8 @@ package com.techbank.account.query.domain;
 import java.math.BigDecimal;
 import java.util.Date;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 
 import com.techbank.account.common.dto.AccountType;
 import com.techbank.cqrs.core.domain.BaseEntity;
