@@ -1,7 +1,12 @@
 version: "3.4"
 
+networks:
+  techbankNet:  
+
 services:
   zookeeper:
+    networks: 
+      - techbankNet
     image: bitnami/zookeeper
     restart: always
     ports:
@@ -11,6 +16,8 @@ services:
     environment:
       - ALLOW_ANONYMOUS_LOGIN=yes
   kafka:
+    networks: 
+      - techbankNet
     image: bitnami/kafka
     ports:
       - "9092:9092"
@@ -24,9 +31,33 @@ services:
       - KAFKA_ADVERTISED_LISTENERS=PLAINTEXT://localhost:9092
     depends_on:
       - zookeeper
+  
+  mongodb:
+    networks: 
+      - techbankNet
+    image: mongo:latest
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+  
+  mysqldb:
+    networks: 
+      - techbankNet
+    image: mysql:latest
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysqldb_data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=techbankRootPsw
 
 volumes:
   zookeeper_data:
     driver: local
   kafka_data:
+    driver: local
+  mongodb_data:
+    driver: local
+  mysqldb_data:
     driver: local
